@@ -8,7 +8,6 @@ import os
 from PIL import ImageTk, Image
 print('Location is:', os.getcwd(), '\n\n\n')
 
-
 data = pd.read_csv('treadmil-users.csv')
 
 app = ttk.Tk()
@@ -66,6 +65,11 @@ ttk.OptionMenu(app, col3, *values).place(x = 150, y = 180)
 cnv = ttk.Canvas(app, width = 250, height = 200)
 cnv.place(x = 300, y = 100)
 
+#Label 
+result = ttk.Variable(app)
+ttk.Label(app, textvariable=result).place(x=300,y=300)
+
+
 def show():
 
     global img
@@ -77,14 +81,28 @@ def show():
     column1 = col1.get() 
     column2 = col2.get()
     column3 = col3.get()
-    ##if column1 == 'select' or column2 == 'select' or column3 == 'select':
-      ##  print("Please Select appropriate")
-    ##else:
+
+    g = graphs.get()
+    if 'col1' in g:
+        if column1 == 'select':
+            result.set('Column1 must be selected')
+            return
+
+    if 'col2' in g:
+        if column2 == 'select':
+            result.set('Column2 must be selected')
+            return
+    
+    if 'col3' in g:
+        if column3 == 'select':
+            result.set('Column3 must be selected')
+            return
+
     fig =plt.figure(figsize=(10,3))
-    eval(graphs.get().format(col1 = column1, col2=column2, col3=column3))
+    eval(g.format(col1 = column1, col2=column2, col3=column3))
+    result.set('Sucess')
     fig.savefig("myg.png")
     img = ImageTk.PhotoImage(Image.open('myg.png').resize((250,200)))
-    
     cnv.create_image(0, 0, anchor = ttk.NW, image = img)
         #plt.show()
 
