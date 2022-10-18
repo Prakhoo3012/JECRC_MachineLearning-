@@ -36,6 +36,6 @@ result=ttk.Variable(app)
 result.set('0')
 ttk.Label(app, textvariable=result, pady=15, font=('Arial', 20)).grid(row=5, column=0, columnspan=2)
 
-# Helll
+# Hello
 
 app.mainloop()
